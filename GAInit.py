@@ -53,18 +53,18 @@ def evaluteFAT(FAT):
         col = FAT.shape[1]
         for i in range(0 ,row):
             for j in range(0 ,col):
-                CCload += (FAT[i][j] * calculateCommunicationCost(SI, j, SFragment[i]));
+                CCload += (FAT[i][j] * calculateCommunicationCost(SI, j, SFragment[i]))
         return CCload
 
     def calculatorMinimumTransmissionCost (fragmentId,sizeId = 0, transactionId = 0):
         minTC = np.inf;
         for s in range(0,len(FAT[0])):
             if (FAT[fragmentId][s] == 1):
-                m_size = (SEL[transactionId][fragmentId] / 100) * SFragment[fragmentId];
-                result = calculateCommunicationCost(sizeId, s, m_size);
+                m_size = (SEL[transactionId][fragmentId] / 100) * SFragment[fragmentId]
+                result = calculateCommunicationCost(sizeId, s, m_size)
                 if (minTC > result):
-                    minTC = result;
-        return minTC;
+                    minTC = result
+        return minTC
 
 
     def calculatorTRi (sizeId, transactionId) :

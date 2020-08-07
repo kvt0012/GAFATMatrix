@@ -8,7 +8,7 @@ import random
 n = 20  # size of individual (chromosome)
 m = 10  # size of population
 n_generations = 100 # number of generations
-n_epoch= 10
+n_epoch= 500
 MUTATION_PROBABILITY = 0.25
 NUMBER_BEST_AGAIN_LIMIT = 20
 # để vẽ biểu đồ quá trình tối ưu
@@ -59,73 +59,80 @@ def run():
             i += 1
             epoch += 1
 
-        print("THE BEST CHOICE: ", fats[0].FAT)
+        print("THE BEST CHOICE: \n ", fats[0].FAT)
         print("The fitness score", fats[0].fitnessScore)
 
 
 
+
 run()
-# def crossover(individual1, individual2, crossover_rate=0.9):
-#     individual1_new = individual1.copy()
-#     individual2_new = individual2.copy()
-#
-#     for i in range(n):
-#         if random.random() < crossover_rate:
-#             individual1_new[i] = individual2[i]
-#             individual2_new[i] = individual1[i]
-#
-#     return individual1_new, individual2_new
-#
-#
-# def mutate(individual, mutation_rate=0.05):
-#     individual_m = individual.copy()
-#
-#     for i in range(n):
-#         if random.random() < mutation_rate:
-#             individual_m[i] = np.random.randint(2, size=(4, 4))
-#
-#     return individual_m
-#
-#
-# def selection(sorted_old_population):
-#     index1 = random.randint(0, m - 1)
-#     while True:
-#         index2 = random.randint(0, m - 1)
-#         if (index2 != index1):
-#             break
-#
-#     individual_s = sorted_old_population[index1]
-#     if index2 > index1:
-#         individual_s = sorted_old_population[index2]
-#
-#     return individual_s
+# matplotlib.pyplot.figure()
+#         matplotlib.pyplot.plot(self.best_solutions_fitness)
+#         matplotlib.pyplot.title(title)
+#         matplotlib.pyplot.xlabel(xlabel)
+#         matplotlib.pyplot.ylabel(ylabel)
+#         matplotlib.pyplot.show()
+def crossover(individual1, individual2, crossover_rate=0.9):
+    individual1_new = individual1.copy()
+    individual2_new = individual2.copy()
+
+    for i in range(n):
+        if random.random() < crossover_rate:
+            individual1_new[i] = individual2[i]
+            individual2_new[i] = individual1[i]
+
+    return individual1_new, individual2_new
 
 
-# def create_new_population(old_population, elitism=2, gen=1):
-#     sorted_population = sorted(old_population, key=GA.evaluteFAT())
-#
-#     if gen % 1 == 0:
-#         fitnesses.append(compute_fitness(sorted_population[m - 1]))
-#         print("BEST:", compute_fitness(sorted_population[m - 1]))
-#
-#     new_population = []
-#     while len(new_population) < m - elitism:
-#         # selection
-#         individual_s1 = selection(sorted_population)
-#         individual_s2 = selection(sorted_population)  # duplication
-#
-#         # crossover
-#         individual_c1, individual_c2 = crossover(individual_s1, individual_s2)
-#
-#         # mutation
-#         individual_m1 = mutate(individual_c1)
-#         individual_m2 = mutate(individual_c2)
-#
-#         new_population.append(individual_m1)
-#         new_population.append(individual_m2)
-#
-#     for ind in sorted_population[m - elitism:]:
-#         new_population.append(ind.copy())
-#
-#     return new_population
+def mutate(individual, mutation_rate=0.05):
+    individual_m = individual.copy()
+
+    for i in range(n):
+        if random.random() < mutation_rate:
+            individual_m[i] = np.random.randint(2, size=(4, 4))
+
+    return individual_m
+
+
+def selection(sorted_old_population):
+    index1 = random.randint(0, m - 1)
+    while True:
+        index2 = random.randint(0, m - 1)
+        if (index2 != index1):
+            break
+
+    individual_s = sorted_old_population[index1]
+    if index2 > index1:
+        individual_s = sorted_old_population[index2]
+
+    return individual_s
+
+
+def create_new_population(old_population, elitism=2, gen=1):
+    sorted_population = sorted(old_population, key=GA.evaluteFAT())
+
+    # if gen % 1 == 0:
+    #     # fitnesses.append(compute_fitness(sorted_population[m - 1]))
+    #     # print("BEST:", compute_fitness(sorted_population[m - 1]))
+
+    new_population = []
+    while len(new_population) < m - elitism:
+        # selection
+        individual_s1 = selection(sorted_population)
+        individual_s2 = selection(sorted_population)  # duplication
+
+        # crossover
+        individual_c1, individual_c2 = crossover(individual_s1, individual_s2)
+
+        # mutation
+        individual_m1 = mutate(individual_c1)
+        individual_m2 = mutate(individual_c2)
+
+        new_population.append(individual_m1)
+        new_population.append(individual_m2)
+
+    for ind in sorted_population[m - elitism:]:
+        new_population.append(ind.copy())
+
+    return new_population
 

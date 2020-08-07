@@ -15,7 +15,7 @@ class FAT:
     def __lt__(self, other):
         return self.fitnessScore < other.fitnessScore
     def mate(self, fatherFat):
-        swapPositionStart = Math.ceil((15 - self.swapLength) * random.random());
+        swapPositionStart = Math.ceil((15 - self.swapLength) * random.random())
         swapPositionEnd = swapPositionStart + self.swapLength
         i1 = Math.floor(swapPositionStart / 4)
         j1 = swapPositionStart % 4
@@ -27,17 +27,17 @@ class FAT:
             [self.FAT[i], fatherFat.FAT[i]] = [fatherFat.FAT[i], self.FAT[i]]
         j = 0
         while j <= j2:
-            [self.FAT[i2][j], fatherFat.FAT[i2][j]] = [fatherFat.FAT[i2][j], self.FAT[i2][j]];
+            [self.FAT[i2][j], fatherFat.FAT[i2][j]] = [fatherFat.FAT[i2][j], self.FAT[i2][j]]
             j += 1
         # print([self.FAT, fatherFat.FAT])
         return [self.FAT, fatherFat.FAT]
 
     def mutate_swap(self):
 
-        swapPositionStart = Math.floor(15 * random.random());
-        swapPositionDestination = Math.floor(15 * random.random());
+        swapPositionStart = Math.floor(15 * random.random())
+        swapPositionDestination = Math.floor(15 * random.random())
         i1 = Math.floor(swapPositionStart / 4)
-        j1 = swapPositionStart % 4;
+        j1 = swapPositionStart % 4
         i2 = Math.floor(swapPositionDestination / 4)
-        j2 = swapPositionDestination % 4;
-        [self.FAT[i1, j1], self.FAT[i2, j2]] = [self.FAT[i2, j2], self.FAT[i1, j1]];
+        j2 = swapPositionDestination % 4
+        [self.FAT[i1, j1], self.FAT[i2, j2]] = [self.FAT[i2, j2], self.FAT[i1, j1]]
